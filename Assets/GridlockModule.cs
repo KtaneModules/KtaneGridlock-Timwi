@@ -24,6 +24,7 @@ public class GridlockModule : MonoBehaviour
 
     private static int _moduleIdCounter = 1;
     private int _moduleId;
+    private bool _isSolved;
 
     [Flags]
     private enum Symbol
@@ -234,11 +235,21 @@ public class GridlockModule : MonoBehaviour
 
         for (int i = 0; i < 16; i++)
             MainSelectable.Children[i].OnInteract = GetSquareClickHandler(i);
-        NextButton.OnInteract = delegate { _curPage = (_curPage + 1) % _pages.Length; ShowPage(); return false; };
+        NextButton.OnInteract = delegate
+        {
+            Audio.PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.ButtonPress, NextButton.transform);
+            NextButton.AddInteractionPunch();
+            if (_isSolved)
+                return false;
+            _curPage = (_curPage + 1) % _pages.Length;
+            ShowPage();
+            return false;
+        };
 
         _curPage = 0;
         ShowPage();
         TotalPagesText.text = _pages.Length.ToString();
+        _isSolved = false;
     }
 
     private static string[] _directions = "north-west|north|north-east|west||east|south-west|south|south-east".Split('|');
@@ -255,9 +266,19 @@ public class GridlockModule : MonoBehaviour
     {
         return delegate
         {
+            Audio.PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.ButtonPress, MainSelectable.Children[i].transform);
+            MainSelectable.Children[i].AddInteractionPunch();
+
+            if (_isSolved)
+                return false;
+
             if (i == _solution)
             {
                 Debug.LogFormat(@"[Gridlock #{0}] Pressed {1}: correct. Module solved.", _moduleId, coord(i));
+                _isSolved = true;
+                ShowPage();
+                PageNumberText.text = "-";
+                TotalPagesText.text = "-";
                 Module.HandlePass();
             }
             else
@@ -275,7 +296,7 @@ public class GridlockModule : MonoBehaviour
     {
         for (int i = 0; i < 16; i++)
         {
-            var symbol = _pages[_curPage][i];
+            var symbol = _isSolved ? Symbol.Blank : _pages[_curPage][i];
             var textureIx = (int) (symbol & Symbol.IconMask) - 1;
             if (textureIx == -1)
                 _symbols[i].gameObject.SetActive(false);
