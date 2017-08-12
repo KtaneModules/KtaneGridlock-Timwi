@@ -219,7 +219,7 @@ public class GridlockModule : MonoBehaviour
 
             var newPos = curPos;
             do
-                newPos = (newPos + 4 * yDir + xDir + 16) % 16;
+                newPos = (newPos % 4 + xDir + 4) % 4 + 4 * ((newPos / 4 + yDir + 4) % 4);
             while (newPos != curPos && taken[newPos]);
 
             if (newPos == curPos)
