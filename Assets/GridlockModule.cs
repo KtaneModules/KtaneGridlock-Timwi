@@ -280,6 +280,7 @@ public class GridlockModule : MonoBehaviour
                 PageNumberText.text = "-";
                 TotalPagesText.text = "-";
                 Module.HandlePass();
+                Audio.PlaySoundAtTransform("Carhorn", MainSelectable.transform);
             }
             else
             {
@@ -316,7 +317,7 @@ public class GridlockModule : MonoBehaviour
         command = command.Trim().ToLowerInvariant();
         var m = Regex.Match(command, @"^press (next|[a-d][1-4])$");
 
-        if (!m.Success)
+        if (!m.Success || _isSolved)
             yield break;
 
         yield return null;
