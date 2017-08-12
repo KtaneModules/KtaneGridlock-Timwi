@@ -234,10 +234,11 @@ public class GridlockModule : MonoBehaviour
 
         for (int i = 0; i < 16; i++)
             MainSelectable.Children[i].OnInteract = GetSquareClickHandler(i);
-        NextButton.OnInteract = delegate { _curPage = (_curPage + 1) % _pages.Length; SetPage(); return false; };
+        NextButton.OnInteract = delegate { _curPage = (_curPage + 1) % _pages.Length; ShowPage(); return false; };
 
         _curPage = 0;
-        SetPage();
+        ShowPage();
+        TotalPagesText.text = _pages.Length.ToString();
     }
 
     private static string[] _directions = "north-west|north|north-east|west||east|south-west|south|south-east".Split('|');
@@ -262,13 +263,15 @@ public class GridlockModule : MonoBehaviour
             else
             {
                 Debug.LogFormat(@"[Gridlock #{0}] Pressed {1}: wrong.", _moduleId, coord(i));
+                _curPage = 0;
+                ShowPage();
                 Module.HandleStrike();
             }
             return false;
         };
     }
 
-    private void SetPage()
+    private void ShowPage()
     {
         for (int i = 0; i < 16; i++)
         {
@@ -285,7 +288,6 @@ public class GridlockModule : MonoBehaviour
             _squares[i].material = SquareColors[(int) (symbol & Symbol.ColorMask) >> 4];
         }
         PageNumberText.text = (_curPage + 1).ToString();
-        TotalPagesText.text = _pages.Length.ToString();
     }
 
     IEnumerator ProcessTwitchCommand(string command)
@@ -300,7 +302,7 @@ public class GridlockModule : MonoBehaviour
         if (m.Groups[1].Value == "next")
         {
             _curPage = (_curPage + 1) % _pages.Length;
-            SetPage();
+            ShowPage();
         }
         else
             MainSelectable.Children[(m.Groups[1].Value[0] - 'a') + 4 * (m.Groups[1].Value[1] - '1')].OnInteract();
