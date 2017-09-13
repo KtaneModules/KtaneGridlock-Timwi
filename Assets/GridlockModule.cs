@@ -312,9 +312,22 @@ public class GridlockModule : MonoBehaviour
         PageNumberText.text = (_curPage + 1).ToString();
     }
 
+    public string TwitchHelpMessage = "Use “!{0} press next” to go to the next page and “!{0} press A1” (etc.) to submit an answer. Use “!{0} reset” to get back to the first page.";
+
     IEnumerator ProcessTwitchCommand(string command)
     {
         command = command.Trim().ToLowerInvariant();
+
+        if (command == "reset")
+        {
+            yield return null;
+            while (_curPage != 0)
+            {
+                NextButton.OnInteract();
+                yield return new WaitForSeconds(.25f);
+            }
+        }
+
         var m = Regex.Match(command, @"^press (next|[a-d][1-4])$");
 
         if (!m.Success || _isSolved)
