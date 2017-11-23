@@ -18,6 +18,7 @@ public class GridlockModule : MonoBehaviour
     public KMSelectable MainSelectable;
     public Material[] SquareColors;
     public KMSelectable NextButton;
+    public Texture[] SymbolTextures;
 
     public TextMesh PageNumberText;
     public TextMesh TotalPagesText;
@@ -58,7 +59,6 @@ public class GridlockModule : MonoBehaviour
     }
 
     private Symbol[][] _pages;
-    private Texture2D[] _textures;
     private MeshRenderer[] _squares;
     private MeshRenderer[] _symbols;
     private int _curPage;
@@ -91,14 +91,6 @@ public class GridlockModule : MonoBehaviour
         var firstPageStarPosition = Rnd.Range(0, 16);
         _pages[0][firstPageStarPosition] = Symbol.Star | (Symbol) (Rnd.Range(1, 5) << 4);
 
-        // Create the textures for all the symbols
-        _textures = new Texture2D[Data.RawPngs.Length];
-        for (int i = 0; i < Data.RawPngs.Length; i++)
-        {
-            _textures[i] = new Texture2D(2, 2);
-            _textures[i].LoadImage(Data.RawPngs[i]);
-        }
-
         // Find the objects on which we need to set the colors and symbols
         _squares = new MeshRenderer[16];
         _symbols = new MeshRenderer[16];
@@ -106,7 +98,7 @@ public class GridlockModule : MonoBehaviour
         {
             _squares[i] = MainSelectable.Children[i].GetComponent<MeshRenderer>();
             _squares[i].material = SquareColors[0];
-            _symbols[i] = _squares[i].transform.FindChild("Symbol").GetComponent<MeshRenderer>();
+            _symbols[i] = _squares[i].transform.Find("Symbol").GetComponent<MeshRenderer>();
             _symbols[i].gameObject.SetActive(false);
         }
 
@@ -304,7 +296,7 @@ public class GridlockModule : MonoBehaviour
             else
             {
                 _symbols[i].gameObject.SetActive(true);
-                _symbols[i].material.mainTexture = _textures[textureIx];
+                _symbols[i].material.mainTexture = SymbolTextures[textureIx];
             }
 
             _squares[i].material = SquareColors[(int) (symbol & Symbol.ColorMask) >> 4];
