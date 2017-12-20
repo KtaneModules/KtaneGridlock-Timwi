@@ -679,7 +679,7 @@ public class TestHarness : MonoBehaviour
 
         GameObject o = new GameObject("Light");
         o.transform.localPosition = new Vector3(0, 3, 0);
-        o.transform.localRotation = Quaternion.Euler(new Vector3(50, -30, 0));
+        o.transform.localRotation = Quaternion.Euler(new Vector3(130, -30, 0));
         testLight = o.AddComponent<Light>();
         testLight.type = LightType.Directional;
     }
