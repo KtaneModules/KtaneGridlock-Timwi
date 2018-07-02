@@ -291,9 +291,6 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 959e7a266b29c4848b70e895602fbe14, type: 3}
   PageNumberText: {fileID: 102000011943079276}
   TotalPagesText: {fileID: 102000012843287960}
-  TwitchHelpMessage: "Use \u201C!{0} press next\u201D to go to the next page and \u201C!{0}
-    press A1\u201D (etc.) to submit an answer. Use \u201C!{0} reset\u201D to get back
-    to the first page."
 --- !u!114 &11489324
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1339,13 +1336,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000010532508944}
-  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0.01, z: -0}
-  m_LocalScale: {x: 0.05, y: 0.05, z: 0.05}
+  m_LocalScale: {x: 0.05, y: -0.05, z: 0.05}
   m_Children: []
   m_Father: {fileID: 4000011568135308}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!4 &4000010511106716
 Transform:
   m_ObjectHideFlags: 1
@@ -1406,13 +1403,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000013337416300}
-  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: -0.20000002, y: 0.1501, z: -0.65}
-  m_LocalScale: {x: 0.01, y: 0.0100000035, z: 0.0100000035}
+  m_LocalScale: {x: 0.01, y: -0.01, z: 0.0100000035}
   m_Children: []
   m_Father: {fileID: 4000013731385302}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!4 &4000010777895166
 Transform:
   m_ObjectHideFlags: 1
@@ -1782,13 +1779,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000010448003522}
-  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0.01, z: 1.02}
-  m_LocalScale: {x: 0.05, y: 0.05, z: 0.05}
+  m_LocalScale: {x: 0.05, y: -0.05, z: 0.05}
   m_Children: []
   m_Father: {fileID: 4000011568135308}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!4 &4000013010084920
 Transform:
   m_ObjectHideFlags: 1
@@ -2024,13 +2021,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000011601880292}
-  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0.01, z: 2}
-  m_LocalScale: {x: 0.05, y: 0.05, z: 0.05}
+  m_LocalScale: {x: 0.05, y: -0.05, z: 0.05}
   m_Children: []
   m_Father: {fileID: 4000011568135308}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!4 &4000014065410430
 Transform:
   m_ObjectHideFlags: 1
@@ -3720,7 +3717,7 @@ TextMesh:
   m_Font: {fileID: 12800000, guid: b768eba176470664a8d75df03c40eecb, type: 3}
   m_Color:
     serializedVersion: 2
-    rgba: 4278190080
+    rgba: 4280557056
 --- !u!102 &102000011943079276
 TextMesh:
   serializedVersion: 3

@@ -305,7 +305,7 @@ public class GridlockModule : MonoBehaviour
     }
 
 #pragma warning disable 414
-    private string TwitchHelpMessage = "Use “!{0} press next” to go to the next page and “!{0} press A1” (etc.) to submit an answer. Use “!{0} reset” to get back to the first page.";
+    private readonly string TwitchHelpMessage = "Use “!{0} press next” to go to the next page and “!{0} press A1” (etc.) to submit an answer. Use “!{0} reset” to get back to the first page.";
 #pragma warning restore 414
 
     IEnumerator ProcessTwitchCommand(string command)
