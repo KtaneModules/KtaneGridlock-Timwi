@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using Gridlock;
 using UnityEngine;
 using Rnd = UnityEngine.Random;
 
@@ -19,6 +18,7 @@ public class GridlockModule : MonoBehaviour
     public Material[] SquareColors;
     public KMSelectable NextButton;
     public Texture[] SymbolTextures;
+    public KMColorblindMode ColorblindMode;
 
     public TextMesh PageNumberText;
     public TextMesh TotalPagesText;
@@ -26,6 +26,7 @@ public class GridlockModule : MonoBehaviour
     private static int _moduleIdCounter = 1;
     private int _moduleId;
     private bool _isSolved;
+    private bool _colorblind;
 
     [Flags]
     private enum Symbol
@@ -61,6 +62,7 @@ public class GridlockModule : MonoBehaviour
     private Symbol[][] _pages;
     private MeshRenderer[] _squares;
     private MeshRenderer[] _symbols;
+    private TextMesh[] _cbTexts;
     private int _curPage;
     private int _solution;
 
@@ -94,6 +96,7 @@ public class GridlockModule : MonoBehaviour
         // Find the objects on which we need to set the colors and symbols
         _squares = new MeshRenderer[16];
         _symbols = new MeshRenderer[16];
+        _cbTexts = new TextMesh[16];
         for (int i = 0; i < 16; i++)
         {
             _squares[i] = MainSelectable.Children[i].GetComponent<MeshRenderer>();
@@ -238,13 +241,14 @@ public class GridlockModule : MonoBehaviour
             return false;
         };
 
+        _colorblind = ColorblindMode.ColorblindModeActive;
         _curPage = 0;
         ShowPage();
         TotalPagesText.text = _pages.Length.ToString();
         _isSolved = false;
     }
 
-    private static string[] _directions = "north-west|north|north-east|west||east|south-west|south|south-east".Split('|');
+    private static readonly string[] _directions = "north-west|north|north-east|west||east|south-west|south|south-east".Split('|');
     private static string dir(int xDir, int yDir)
     {
         return _directions[xDir + 1 + 3 * (yDir + 1)];
@@ -300,17 +304,53 @@ public class GridlockModule : MonoBehaviour
             }
 
             _squares[i].material = SquareColors[(int) (symbol & Symbol.ColorMask) >> 4];
+
+            if (_colorblind)
+            {
+                if ((symbol & Symbol.ColorMask) != 0)
+                {
+                    _symbols[i].transform.localPosition = i == 3 ? new Vector3(.18f, .0001f, -.18f) : i == 15 ? new Vector3(.18f, .0001f, .18f) : i == 12 ? new Vector3(-.18f, .0001f, .18f) : new Vector3(-.18f, .0001f, -.18f);
+                    if (_cbTexts[i] == null)
+                    {
+                        _cbTexts[i] = Instantiate(PageNumberText);
+                        _cbTexts[i].transform.parent = _squares[i].transform;
+                        _cbTexts[i].transform.localPosition = i == 3 ? new Vector3(-.45f, .0002f, .54f) : i == 15 ? new Vector3(-.54f, .0002f, -.45f) : i == 12 ? new Vector3(.45f, .0002f, -.54f) : new Vector3(.54f, .0002f, .45f);
+                        _cbTexts[i].transform.localEulerAngles = new Vector3(-90, i == 3 ? -90 : i == 15 ? 180 : i == 12 ? 90 : 0, 0);
+                        _cbTexts[i].transform.localScale = new Vector3(.05f, -.05f, .05f);
+                    }
+                    _cbTexts[i].gameObject.SetActive(true);
+                    _cbTexts[i].text = (symbol & Symbol.ColorMask).ToString().Substring(0, 1);
+                    _cbTexts[i].color = (symbol & Symbol.ColorMask) == Symbol.Yellow ? Color.gray : Color.white;
+                }
+                else
+                {
+                    _symbols[i].transform.localPosition = new Vector3(0, .0001f, 0);
+                    if (_cbTexts[i] != null)
+                        _cbTexts[i].gameObject.SetActive(false);
+                }
+            }
         }
         PageNumberText.text = (_curPage + 1).ToString();
     }
 
 #pragma warning disable 414
-    private readonly string TwitchHelpMessage = "Use “!{0} press next” to go to the next page and “!{0} press A1” (etc.) to submit an answer. Use “!{0} reset” to get back to the first page.";
+    private readonly string TwitchHelpMessage = "!{0} press next [go to the next page] | !{0} press A1 [submit an answer] | !{0} reset [go back to page 1] | !{0} colorblind";
 #pragma warning restore 414
 
     IEnumerator ProcessTwitchCommand(string command)
     {
         command = command.Trim().ToLowerInvariant();
+
+        if (command == "colorblind")
+        {
+            if (!_colorblind)
+            {
+                _colorblind = true;
+                ShowPage();
+            }
+            yield return null;
+            yield break;
+        }
 
         if (command == "reset")
         {

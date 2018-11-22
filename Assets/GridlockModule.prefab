@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 11489324}
   - component: {fileID: 11496072}
   - component: {fileID: 11489182}
+  - component: {fileID: 114974797851780028}
   m_Layer: 0
   m_Name: GridlockModule
   m_TagString: Untagged
@@ -289,6 +290,7 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 81c73019ece2ffa498a264038bfefe82, type: 3}
   - {fileID: 2800000, guid: c5c0d7cab17b7074a882c2f3b96f6f8a, type: 3}
   - {fileID: 2800000, guid: 959e7a266b29c4848b70e895602fbe14, type: 3}
+  ColorblindMode: {fileID: 114974797851780028}
   PageNumberText: {fileID: 102000011943079276}
   TotalPagesText: {fileID: 102000012843287960}
 --- !u!114 &11489324
@@ -4884,3 +4886,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShaderNames:
   - Unlit/Transparent
+--- !u!114 &114974797851780028
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 127088}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1cfb889a07d5fd4e9baed7960bb397f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _colorblindMode: 0
