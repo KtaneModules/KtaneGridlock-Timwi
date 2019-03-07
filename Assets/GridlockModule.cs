@@ -315,8 +315,8 @@ public class GridlockModule : MonoBehaviour
                         _cbTexts[i] = Instantiate(PageNumberText);
                         _cbTexts[i].transform.parent = _squares[i].transform;
                         _cbTexts[i].transform.localPosition = i == 3 ? new Vector3(-.45f, .0002f, .54f) : i == 15 ? new Vector3(-.54f, .0002f, -.45f) : i == 12 ? new Vector3(.45f, .0002f, -.54f) : new Vector3(.54f, .0002f, .45f);
-                        _cbTexts[i].transform.localEulerAngles = new Vector3(-90, i == 3 ? -90 : i == 15 ? 180 : i == 12 ? 90 : 0, 0);
-                        _cbTexts[i].transform.localScale = new Vector3(.05f, -.05f, .05f);
+                        _cbTexts[i].transform.localEulerAngles = new Vector3(90, i == 3 ? -90 : i == 15 ? 180 : i == 12 ? 90 : 0, 0);
+                        _cbTexts[i].transform.localScale = new Vector3(.05f, .05f, .05f);
                     }
                     _cbTexts[i].gameObject.SetActive(true);
                     _cbTexts[i].text = (symbol & Symbol.ColorMask).ToString().Substring(0, 1);
