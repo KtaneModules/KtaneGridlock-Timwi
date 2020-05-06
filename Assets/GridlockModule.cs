@@ -376,4 +376,11 @@ public class GridlockModule : MonoBehaviour
         else
             MainSelectable.Children[(m.Groups[1].Value[0] - 'a') + 4 * (m.Groups[1].Value[1] - '1')].OnInteract();
     }
+
+    IEnumerator TwitchHandleForcedSolve()
+    {
+        MainSelectable.Children[_solution].OnInteract();
+        yield return new WaitForSeconds(.1f);
+
+    }
 }
