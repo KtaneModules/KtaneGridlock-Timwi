@@ -362,19 +362,15 @@ public class GridlockModule : MonoBehaviour
             }
         }
 
-        var m = Regex.Match(command, @"^press (next|[a-d][1-4])$");
+        var m = Regex.Match(command, @"^(?:press )?(next|[a-d][1-4])$");
 
         if (!m.Success || _isSolved)
             yield break;
 
         yield return null;
-        if (m.Groups[1].Value == "next")
-        {
-            _curPage = (_curPage + 1) % _pages.Length;
-            ShowPage();
-        }
-        else
-            MainSelectable.Children[(m.Groups[1].Value[0] - 'a') + 4 * (m.Groups[1].Value[1] - '1')].OnInteract();
+        yield return m.Groups[1].Value == "next"
+            ? new[] { NextButton }
+            : new[] { MainSelectable.Children[(m.Groups[1].Value[0] - 'a') + 4 * (m.Groups[1].Value[1] - '1')] };
     }
 
     IEnumerator TwitchHandleForcedSolve()
