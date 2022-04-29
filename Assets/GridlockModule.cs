@@ -329,6 +329,12 @@ public class GridlockModule : MonoBehaviour
                         _cbTexts[i].gameObject.SetActive(false);
                 }
             }
+            else
+            {
+                _symbols[i].transform.localPosition = new Vector3(0, .0001f, 0);
+                if (_cbTexts[i] != null)
+                    _cbTexts[i].gameObject.SetActive(false);
+            }
         }
         PageNumberText.text = (_curPage + 1).ToString();
     }
@@ -343,11 +349,8 @@ public class GridlockModule : MonoBehaviour
 
         if (command == "colorblind")
         {
-            if (!_colorblind)
-            {
-                _colorblind = true;
-                ShowPage();
-            }
+            _colorblind = !_colorblind;
+            ShowPage();
             yield return null;
             yield break;
         }
